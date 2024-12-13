@@ -31,7 +31,8 @@
     kanshi          
     wdisplays       
     gtk3            
-    libgcc          
+    libgcc   
+    firefox       
   ];
 
   # Переменные окружения для Wayland
