@@ -20,10 +20,6 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Пакеты
+  # Разрешаем unfree пакеты
   nixpkgs.config.allowUnfree = true;
-  programs.firefox.enable = true;
-  environment.systemPackages = with pkgs; [
-    # ваши системные пакеты
-  ];
 }
