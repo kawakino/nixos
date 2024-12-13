@@ -2,21 +2,26 @@
 
 {
   home.file.".config/hypr/hyprland.conf".text = ''
-    # Мониторы
-    monitor=,1920x1080@60,auto,1
+    # Мониторы - автоматическое определение
+    monitor=,preferred,auto,1
 
+    # Базовые переменные окружения
+    env = XCURSOR_SIZE,24
+    env = QT_AUTO_SCREEN_SCALE_FACTOR,1
+    env = GDK_BACKEND,wayland
+    
     # Автозапуск
     exec-once = waybar
-
-    # Переменные окружения
-    env = XCURSOR_SIZE,24
-    env = GDK_SCALE,1
     
     # Ввод
     input {
         kb_layout = us,ru
         kb_options = grp:alt_shift_toggle
         follow_mouse = 1
+        touchpad {
+            natural_scroll = true
+            scroll_factor = 0.5
+        }
         sensitivity = 0
     }
     
@@ -28,6 +33,21 @@
         col.active_border = rgba(33ccffee)
         col.inactive_border = rgba(595959aa)
         layout = dwindle
+    }
+
+    decoration {
+        rounding = 8
+        blur {
+            enabled = true
+            size = 3
+            passes = 1
+        }
+    }
+
+    # Мышь и тачпад
+    gestures {
+        workspace_swipe = true
+        workspace_swipe_fingers = 3
     }
 
     # Разные полезные бинды
