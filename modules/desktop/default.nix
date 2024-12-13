@@ -40,7 +40,7 @@
     nerd-fonts.victor-mono
     nerd-fonts.hack
     noto-fonts
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     noto-fonts-emoji
   ];
 
