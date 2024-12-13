@@ -2,6 +2,8 @@
 { config, pkgs, ... }:
 
 {
+  home.stateVersion = "23.11";
+  
   home.file.".config/hypr/hyprland.conf".text = ''
     # Мониторы
     monitor=,preferred,auto,auto
