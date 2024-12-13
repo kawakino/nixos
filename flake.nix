@@ -23,7 +23,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.cizen = import ./home/hyprland.nix;
+            home-manager.users.cizen = import ./home/home.nix;
           }
         ];
       };
