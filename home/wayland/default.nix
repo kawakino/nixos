@@ -1,8 +1,12 @@
 { config, pkgs, ... }:
 
 {
-  home.file.".config/hypr/hyprland.conf".text = ''
-    # Автозапуск
+    home.file.".config/hypr/hyprland.conf".text = ''
+    # В начале конфигурации
+    exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+    exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+    
+    # Затем уже автозапуск
     exec-once = waybar
     exec-once = mako
     exec-once = kanshi
@@ -95,67 +99,53 @@
   '';
 
 home.file.".config/waybar/config".text = ''
-  {
+{
     "layer": "top",
     "position": "top",
-    "mod": "dock",
-    "exclusive": true,
-    "passthrough": false,
-    "gtk-layer-shell": true,
     "height": 30,
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["battery", "backlight", "pulseaudio", "network", "tray"],
+    "modules-right": ["pulseaudio", "network", "cpu", "memory", "tray"],
     
     "hyprland/workspaces": {
-      "disable-scroll": true,
-      "all-outputs": true,
-      "format": "{name}"
+        "format": "{name}",
+        "on-click": "activate"
     },
     
     "clock": {
-      "format": "{:%H:%M}",
-      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        "format": "{:%H:%M}"
     },
     
-    "battery": {
-      "interval": 60,
-      "states": {
-        "warning": 30,
-        "critical": 15
-      },
-      "format": "{capacity}% {icon}",
-      "format-icons": ["", "", "", "", ""],
-      "max-length": 25
+    "cpu": {
+        "format": "{usage}% ",
+        "tooltip": false
+    },
+    
+    "memory": {
+        "format": "{}% "
     },
     
     "network": {
-      "format-wifi": "{essid} ({signalStrength}%) ",
-      "format-ethernet": "{ipaddr}/{cidr} ",
-      "tooltip-format": "{ifname} via {gwaddr} ",
-      "format-linked": "{ifname} (No IP) ",
-      "format-disconnected": "Disconnected ⚠",
-      "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "format-wifi": "{essid} ",
+        "format-ethernet": "{ipaddr} ",
+        "format-disconnected": "Disconnected ⚠",
+        "tooltip-format": "{ifname}"
     },
     
     "pulseaudio": {
-      "format": "{volume}% {icon}",
-      "format-bluetooth": "{volume}% {icon} ",
-      "format-muted": "",
-      "format-icons": {
-        "headphone": "",
-        "hands-free": "",
-        "headset": "",
-        "phone": "",
-        "portable": "",
-        "car": "",
-        "default": ["", ""]
-      },
-      "scroll-step": 1,
-      "on-click": "pavucontrol",
-      "ignored-sinks": ["Easy Effects Sink"]
+        "format": "{volume}% {icon}",
+        "format-muted": " Muted",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    
+    "tray": {
+        "icon-size": 16,
+        "spacing": 10
     }
-  }
+}
 '';
 
 home.file.".config/waybar/style.css".text = ''
