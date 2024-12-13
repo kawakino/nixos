@@ -34,7 +34,7 @@
 
   # Шрифты (исправленный способ)
   fonts.packages = with pkgs; [
-    jetbrainsmono
+    nerd-fonts
   ];
 
   # Переменные окружения
