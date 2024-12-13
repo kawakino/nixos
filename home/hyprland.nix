@@ -6,7 +6,11 @@
   
   home.file.".config/hypr/hyprland.conf".text = ''
     # Мониторы
-    monitor=,preferred,auto,auto
+    monitor=,highres,auto,1  # изменено с preferred на highres
+
+    # Переменные
+    env = GDK_SCALE,1
+    env = XCURSOR_SIZE,24
     
     # Автозапуск
     exec-once = waybar
