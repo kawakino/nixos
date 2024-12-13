@@ -52,28 +52,29 @@
       _JAVA_AWT_WM_NONREPARENTING = "1";
     };
 
-    systemPackages = with pkgs; [
-      # Основные утилиты
-      xdg-desktop-portal-hyprland
-      waybar              # исправлено имя пакета
-      foot               
-      rofi-wayland       
-      mako              
-      swww              
-      swaylock-effects  
-      wl-clipboard      
-      
-      # Управление системой
-      brightnessctl     
-      pamixer           
-      
-      # Скриншоты
-      grim              
-      slurp             
-      wl-screenrec      
+  environment.systemPackages = with pkgs; [
+    # Основные утилиты
+    xdg-desktop-portal-hyprland
+    waybar
+    foot               
+    rofi-wayland       
+    mako              
+    swww              
+    swaylock-effects  
+    wl-clipboard      
+    
+    # Добавим необходимые зависимости
+    libsForQt5.qt5.qtwayland
+    qt6.qtwayland
+    xdg-utils
+    glib
+    gtk3
+  ];
 
-      # Для автоблокировки
-      swayidle
-    ];
+  # Добавим поддержку портала
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "*";
   };
 }
