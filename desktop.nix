@@ -9,15 +9,16 @@
       variant = "";
     };
   };
-    
+
+   #TODO: delete this block 
   # Автоматический вход без DM
-  services.displayManager = {
-    autoLogin = {
-      enable = true;
-      user = "cizen";
-    };
-    defaultSession = "hyprland";
-  };
+#   services.displayManager = {
+#     autoLogin = {
+#       enable = true;
+#       user = "cizen";
+#     };
+#     defaultSession = "hyprland";
+#   };
 
   # Hyprland
   programs.hyprland = {
