@@ -1,23 +1,16 @@
-# home/hyprland.nix
 { config, pkgs, ... }:
 
 {
-  home.stateVersion = "23.11";
-  
   home.file.".config/hypr/hyprland.conf".text = ''
     # Мониторы
-    monitor=,highres,auto,1  # изменено с preferred на highres
+    monitor=,1920x1080@60,auto,1
 
-    # Переменные
-    env = GDK_SCALE,1
-    env = XCURSOR_SIZE,24
-    
     # Автозапуск
     exec-once = waybar
-    exec-once = mako
-    
+
     # Переменные окружения
     env = XCURSOR_SIZE,24
+    env = GDK_SCALE,1
     
     # Ввод
     input {
@@ -36,64 +29,28 @@
         col.inactive_border = rgba(595959aa)
         layout = dwindle
     }
-    
-    # Украшения
-    decoration {
-        rounding = 10
-        blur = yes
-        blur_size = 3
-        blur_passes = 1
-    }
-    
-    # Анимации
-    animations {
-        enabled = yes
-        bezier = myBezier, 0.05, 0.9, 0.1, 1.05
-        animation = windows, 1, 7, myBezier
-        animation = windowsOut, 1, 7, default, popin 80%
-        animation = fade, 1, 7, default
-    }
-    
-    # Раскладка
-    dwindle {
-        pseudotile = yes
-        preserve_split = yes
-    }
-    
-    # Горячие клавиши
-    $mainMod = SUPER
-    
-    bind = $mainMod, RETURN, exec, foot
-    bind = $mainMod, Q, killactive,
-    bind = $mainMod, M, exit,
-    bind = $mainMod, E, exec, dolphin
-    bind = $mainMod, V, togglefloating,
-    bind = $mainMod, SPACE, exec, rofi -show drun
-    bind = $mainMod, P, pseudo,
-    bind = $mainMod, J, togglesplit,
-    
-    # Перемещение фокуса
-    bind = $mainMod, left, movefocus, l
-    bind = $mainMod, right, movefocus, r
-    bind = $mainMod, up, movefocus, u
-    bind = $mainMod, down, movefocus, d
-    
-    # Рабочие столы
-    bind = $mainMod, 1, workspace, 1
-    bind = $mainMod, 2, workspace, 2
-    bind = $mainMod, 3, workspace, 3
-    bind = $mainMod, 4, workspace, 4
-    bind = $mainMod, 5, workspace, 5
-    
+
+    # Разные полезные бинды
+    bind = SUPER, RETURN, exec, foot
+    bind = SUPER, Q, killactive,
+    bind = SUPER, M, exit,
+    bind = SUPER, V, togglefloating,
+    bind = SUPER, SPACE, exec, rofi -show drun
+    bind = SUPER, P, pseudo,
+    bind = SUPER, J, togglesplit,
+
+    # Воркспейсы
+    bind = SUPER, 1, workspace, 1
+    bind = SUPER, 2, workspace, 2
+    bind = SUPER, 3, workspace, 3
+    bind = SUPER, 4, workspace, 4
+    bind = SUPER, 5, workspace, 5
+
     # Перемещение окон
-    bind = $mainMod SHIFT, 1, movetoworkspace, 1
-    bind = $mainMod SHIFT, 2, movetoworkspace, 2
-    bind = $mainMod SHIFT, 3, movetoworkspace, 3
-    bind = $mainMod SHIFT, 4, movetoworkspace, 4
-    bind = $mainMod SHIFT, 5, movetoworkspace, 5
-    
-    # Мышь
-    bindm = $mainMod, mouse:272, movewindow
-    bindm = $mainMod, mouse:273, resizewindow
+    bind = SUPER SHIFT, 1, movetoworkspace, 1
+    bind = SUPER SHIFT, 2, movetoworkspace, 2
+    bind = SUPER SHIFT, 3, movetoworkspace, 3
+    bind = SUPER SHIFT, 4, movetoworkspace, 4
+    bind = SUPER SHIFT, 5, movetoworkspace, 5
   '';
 }
