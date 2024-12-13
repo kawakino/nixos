@@ -103,22 +103,86 @@ home.file.".config/waybar/config".text = ''
     "layer": "top",
     "position": "top",
     "spacing": 4,
-    "modules-left": ["hyprland/workspaces"],
+    "height": 35,
+    "modules-left": ["hyprland/workspaces", "custom/media"],
     "modules-center": ["clock"],
-    "modules-right": ["tray"],
+    "modules-right": ["backlight", "pulseaudio", "network", "battery", "custom/power", "tray"],
 
     "hyprland/workspaces": {
         "format": "{name}",
-        "on-scroll-up": "hyprctl dispatch workspace e+1",
-        "on-scroll-down": "hyprctl dispatch workspace e-1"
+        "on-click": "activate",
+        "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "urgent": "",
+            "active": "",
+            "default": ""
+        },
+        "sort-by-number": true
     },
 
     "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format": "{:%H:%M}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+        "format-alt": "{:%Y-%m-%d}"
+    },
+
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+
+    "network": {
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "Connected  ",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },
+
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": " {icon}",
+        "format-muted": " ",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    "backlight": {
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""],
+        "on-scroll-up": "brightnessctl set +5%",
+        "on-scroll-down": "brightnessctl set 5%-"
+    },
+
+    "custom/power": {
+        "format": "⏻",
+        "on-click": "rofi -show power-menu -modi power-menu:~/.local/bin/rofi-power-menu"
     },
 
     "tray": {
+        "icon-size": 18,
         "spacing": 10
     }
 }
@@ -128,51 +192,129 @@ home.file.".config/waybar/style.css".text = ''
 * {
     border: none;
     border-radius: 0;
-    font-family: "JetBrainsMono Nerd Font";
-    font-size: 13px;
+    font-family: "JetBrainsMono Nerd Font", "Roboto Mono", sans-serif;
+    font-weight: bold;
+    font-size: 14px;
     min-height: 0;
 }
 
 window#waybar {
-    background: transparent;
+    background: rgba(21, 18, 27, 0);
+    color: #cdd6f4;
 }
 
-window#waybar.hidden {
-    opacity: 0.2;
-}
-
-#workspaces {
-    margin-right: 8px;
+tooltip {
+    background: #1e1e2e;
     border-radius: 10px;
-    background-color: #1e1e2e;
-    margin: 5px;
-    padding: 0px 5px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #11111b;
 }
 
 #workspaces button {
-    padding: 0px 5px;
-    color: #cdd6f4;
+    padding: 5px;
+    color: #313244;
+    margin-right: 5px;
 }
 
 #workspaces button.active {
-    color: #1e1e2e;
-    background-color: #cdd6f4;
+    color: #a6adc8;
+    background: #eba0ac;
     border-radius: 10px;
+}
+
+#workspaces button:hover {
+    background: #11111b;
+    color: #cdd6f4;
+    border-radius: 10px;
+}
+
+#custom/power,
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#workspaces,
+#tray,
+#backlight {
+    background: #1e1e2e;
+    padding: 0px 10px;
+    margin: 3px 0px;
+    margin-top: 10px;
+    border: 1px solid #181825;
+}
+
+#custom/power {
+    color: #e66465;
+    border-radius: 10px;
+    margin-right: 10px;
+    padding: 0 15px;
 }
 
 #clock {
-    background-color: #1e1e2e;
-    color: #cdd6f4;
+    color: #fab387;
     border-radius: 10px;
-    margin: 5px;
-    padding: 0px 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#network {
+    color: #f9e2af;
+    border-radius: 10px 0px 0px 10px;
+    border-left: 0px;
+    margin-left: 10px;
+}
+
+#pulseaudio {
+    color: #89b4fa;
+    border-radius: 0px 10px 10px 0px;
+    margin-right: 10px;
+}
+
+#battery {
+    color: #a6e3a1;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+#battery.charging, #battery.plugged {
+    color: #94e2d5;
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f38ba8;
+    color: #1e1e2e;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes blink {
+    to {
+        background-color: #1e1e2e;
+        color: #f38ba8;
+    }
+}
+
+#backlight {
+    color: #cba6f7;
+    border-radius: 10px;
+    margin-right: 10px;
 }
 
 #tray {
-    background-color: #1e1e2e;
     border-radius: 10px;
-    margin: 5px;
-    padding: 0px 10px;
+    margin-right: 10px;
+}
+
+#workspaces {
+    background: #1e1e2e;
+    border-radius: 10px;
+    margin-left: 10px;
+    padding-right: 0px;
+    padding-left: 5px;
 }
 '';
 
