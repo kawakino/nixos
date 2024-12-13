@@ -8,7 +8,8 @@
     ./waybar.nix
   ];
 
+  fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
-    jetbrains-mono-nerdfont  # шрифт для waybar
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
 }
