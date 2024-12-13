@@ -32,16 +32,13 @@
     wdisplays       # GUI для настройки мониторов
   ];
 
-  # Шрифты (исправленный способ)
   fonts.packages = with pkgs; [
     jetbrains-mono
-    (nerdfonts.override { fonts = [ 
-      "JetBrainsMono"
-      "FiraCode" 
-      "Iosevka"
-      "VictorMono"
-      "Hack"
-    ]; })
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code
+    nerd-fonts.iosevka
+    nerd-fonts.victor-mono
+    nerd-fonts.hack
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji
