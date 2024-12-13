@@ -1,12 +1,21 @@
 { config, pkgs, ... }:
 
 {
-  # Включаем X11 и Wayland
+  # Базовый X11 и Wayland
   services.xserver = {
     enable = true;
     xkb = {
       layout = "us";
       variant = "";
+    };
+    
+    # Автоматический вход без DM
+    displayManager = {
+      autoLogin = {
+        enable = true;
+        user = "cizen";
+      };
+      defaultSession = "hyprland";
     };
   };
 
@@ -26,25 +35,56 @@
     pulse.enable = true;
   };
 
-  # Базовые компоненты Wayland
-  environment.systemPackages = with pkgs; [
-    # Основные утилиты
-    xdg-desktop-portal-hyprland
-    waybar-hyprland    # современный, минималистичный статус бар
-    foot               # быстрый и легкий терминал
-    rofi-wayland       # продвинутый лаунчер с поддержкой Wayland
-    mako              # легкие уведомления для Wayland
-    swww              # установка обоев
-    swaylock-effects  # красивая блокировка экрана
-    wl-clipboard      # буфер обмена
-    
-    # Управление системой
-    brightnessctl     # яркость
-    pamixer           # управление звуком из командной строки
-    
-    # Скриншоты
-    grim              # базовый инструмент
-    slurp             # выбор области
-    wl-screenrec      # запись экрана (легче wf-recorder)
-  ];
+  # Необходимые системные сервисы
+  security.polkit.enable = true;
+  
+  # Автоблокировка экрана
+  services.swayidle = {
+    enable = true;
+    timeouts = [
+      { timeout = 300; command = "${pkgs.swaylock-effects}/bin/swaylock -f"; }
+      { timeout = 600; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; resumeCommand = "${pkgs.hyprland}/bin/hyprctl dispatch dpms on"; }
+    ];
+    events = [
+      { event = "before-sleep"; command = "${pkgs.swaylock-effects}/bin/swaylock -f"; }
+    ];
+  };
+
+  # Настройка порталов и переменных окружения
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+  };
+
+  environment = {
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+      WLR_NO_HARDWARE_CURSORS = "1";
+      _JAVA_AWT_WM_NONREPARENTING = "1";
+    };
+
+    systemPackages = with pkgs; [
+      # Основные утилиты
+      xdg-desktop-portal-hyprland
+      waybar-hyprland    
+      foot               
+      rofi-wayland       
+      mako              
+      swww              
+      swaylock-effects  
+      wl-clipboard      
+      
+      # Управление системой
+      brightnessctl     
+      pamixer           
+      
+      # Скриншоты
+      grim              
+      slurp             
+      wl-screenrec      
+
+      # Для swayidle
+      swayidle
+    ];
+  };
 }
