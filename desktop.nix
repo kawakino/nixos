@@ -37,18 +37,6 @@
 
   # Необходимые системные сервисы
   security.polkit.enable = true;
-  
-  # Автоблокировка экрана
-  services.swayidle = {
-    enable = true;
-    timeouts = [
-      { timeout = 300; command = "${pkgs.swaylock-effects}/bin/swaylock -f"; }
-      { timeout = 600; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; resumeCommand = "${pkgs.hyprland}/bin/hyprctl dispatch dpms on"; }
-    ];
-    events = [
-      { event = "before-sleep"; command = "${pkgs.swaylock-effects}/bin/swaylock -f"; }
-    ];
-  };
 
   # Настройка порталов и переменных окружения
   xdg.portal = {
@@ -83,7 +71,7 @@
       slurp             
       wl-screenrec      
 
-      # Для swayidle
+      # Для автоблокировки
       swayidle
     ];
   };
