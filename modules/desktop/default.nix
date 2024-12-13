@@ -32,8 +32,16 @@
     wdisplays       
     gtk3            
     libgcc   
-    firefox       
+    firefox  
+    vanilla-dmz     
   ];
+
+  home.pointerCursor = {
+    package = pkgs.vanilla-dmz;
+    name = "Vanilla-DMZ";
+    size = 24;
+  };
+}
 
   # Переменные окружения для Wayland
   environment.sessionVariables = {

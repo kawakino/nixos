@@ -104,13 +104,15 @@ home.file.".config/waybar/config".text = ''
     "position": "top",
     "spacing": 4,
     "height": 35,
-    "modules-left": ["hyprland/workspaces", "custom/media"],
+    "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["backlight", "pulseaudio", "network", "battery", "custom/power", "tray"],
+    "modules-right": ["pulseaudio", "network", "tray"],
 
     "hyprland/workspaces": {
-        "format": "{name}",
-        "on-click": "activate",
+        "disable-scroll": true,
+        "all-outputs": true,
+        "active-only": false,
+        "format": "{icon}",
         "format-icons": {
             "1": "",
             "2": "",
@@ -118,10 +120,8 @@ home.file.".config/waybar/config".text = ''
             "4": "",
             "5": "",
             "urgent": "",
-            "active": "",
             "default": ""
-        },
-        "sort-by-number": true
+        }
     },
 
     "clock": {
@@ -130,55 +130,20 @@ home.file.".config/waybar/config".text = ''
         "format-alt": "{:%Y-%m-%d}"
     },
 
-    "battery": {
-        "states": {
-            "good": 95,
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ",
-        "format-plugged": "{capacity}% ",
-        "format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", ""]
-    },
-
     "network": {
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "Connected  ",
-        "tooltip-format": "{ifname} via {gwaddr} ",
-        "format-linked": "{ifname} (No IP) ",
+        "format-wifi": "{essid} ",
+        "format-ethernet": "ETH ",
         "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "tooltip-format": "{ifname}: {ipaddr}"
     },
 
     "pulseaudio": {
         "format": "{volume}% {icon}",
-        "format-bluetooth": "{volume}% {icon}",
-        "format-bluetooth-muted": " {icon}",
-        "format-muted": " ",
+        "format-muted": "Muted ",
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
             "default": ["", "", ""]
         },
         "on-click": "pavucontrol"
-    },
-
-    "backlight": {
-        "format": "{percent}% {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", ""],
-        "on-scroll-up": "brightnessctl set +5%",
-        "on-scroll-down": "brightnessctl set 5%-"
-    },
-
-    "custom/power": {
-        "format": "⏻",
-        "on-click": "rofi -show power-menu -modi power-menu:~/.local/bin/rofi-power-menu"
     },
 
     "tray": {
@@ -192,34 +157,31 @@ home.file.".config/waybar/style.css".text = ''
 * {
     border: none;
     border-radius: 0;
-    font-family: "JetBrainsMono Nerd Font", "Roboto Mono", sans-serif;
-    font-weight: bold;
+    font-family: "JetBrainsMono Nerd Font";
     font-size: 14px;
     min-height: 0;
 }
 
 window#waybar {
-    background: rgba(21, 18, 27, 0);
+    background: rgba(21, 18, 27, 0.8);
     color: #cdd6f4;
 }
 
-tooltip {
+#workspaces {
     background: #1e1e2e;
+    margin: 5px;
+    padding: 0 5px;
     border-radius: 10px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: #11111b;
 }
 
 #workspaces button {
-    padding: 5px;
-    color: #313244;
-    margin-right: 5px;
+    padding: 0 5px;
+    color: #cdd6f4;
 }
 
 #workspaces button.active {
-    color: #a6adc8;
-    background: #eba0ac;
+    color: #1e1e2e;
+    background: #cdd6f4;
     border-radius: 10px;
 }
 
@@ -229,92 +191,39 @@ tooltip {
     border-radius: 10px;
 }
 
-#custom/power,
 #clock,
-#battery,
 #pulseaudio,
 #network,
-#workspaces,
-#tray,
-#backlight {
+#tray {
     background: #1e1e2e;
-    padding: 0px 10px;
-    margin: 3px 0px;
-    margin-top: 10px;
-    border: 1px solid #181825;
-}
-
-#custom/power {
-    color: #e66465;
+    padding: 0 10px;
+    margin: 5px;
     border-radius: 10px;
-    margin-right: 10px;
-    padding: 0 15px;
 }
 
 #clock {
     color: #fab387;
-    border-radius: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
 }
 
 #network {
     color: #f9e2af;
-    border-radius: 10px 0px 0px 10px;
-    border-left: 0px;
-    margin-left: 10px;
 }
 
 #pulseaudio {
     color: #89b4fa;
-    border-radius: 0px 10px 10px 0px;
-    margin-right: 10px;
-}
-
-#battery {
-    color: #a6e3a1;
-    border-radius: 10px;
-    margin-right: 10px;
-}
-
-#battery.charging, #battery.plugged {
-    color: #94e2d5;
-}
-
-#battery.critical:not(.charging) {
-    background-color: #f38ba8;
-    color: #1e1e2e;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-}
-
-@keyframes blink {
-    to {
-        background-color: #1e1e2e;
-        color: #f38ba8;
-    }
-}
-
-#backlight {
-    color: #cba6f7;
-    border-radius: 10px;
-    margin-right: 10px;
 }
 
 #tray {
-    border-radius: 10px;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
-#workspaces {
+tooltip {
     background: #1e1e2e;
-    border-radius: 10px;
-    margin-left: 10px;
-    padding-right: 0px;
-    padding-left: 5px;
+    border: 1px solid #cdd6f4;
+}
+
+tooltip label {
+    color: #cdd6f4;
 }
 '';
 
