@@ -8,15 +8,15 @@
       layout = "us";
       variant = "";
     };
+  };
     
-    # Автоматический вход без DM
-    displayManager = {
-      autoLogin = {
-        enable = true;
-        user = "cizen";
-      };
-      defaultSession = "hyprland";
+  # Автоматический вход без DM
+  services.displayManager = {
+    autoLogin = {
+      enable = true;
+      user = "cizen";
     };
+    defaultSession = "hyprland";
   };
 
   # Hyprland
@@ -54,7 +54,7 @@
     systemPackages = with pkgs; [
       # Основные утилиты
       xdg-desktop-portal-hyprland
-      waybar-hyprland    
+      waybar              # исправлено имя пакета
       foot               
       rofi-wayland       
       mako              

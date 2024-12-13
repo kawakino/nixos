@@ -4,13 +4,14 @@
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
-    # firewall
     firewall.allowedTCPPorts = [ 22 ];
   };
 
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
-    permitRootLogin = "no";
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+    };
   };
 }
