@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 
 {
-  # Тачпад
-  services.xserver.libinput = {
+  # Тачпад (исправленные опции)
+  services.libinput = {
     enable = true;
     touchpad = {
       naturalScrolling = true;
