@@ -32,6 +32,9 @@
         workspace_swipe_fingers = 3
     }
 
+    # Выход из Hyprland
+    bind = SUPER, M, exit
+
     # Бинды
     bind = SUPER, Return, exec, foot
     bind = SUPER, Q, killactive
