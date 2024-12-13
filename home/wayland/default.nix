@@ -57,7 +57,33 @@
     bindel = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
     bindel = , XF86MonBrightnessUp, exec, brightnessctl s +5%
     bindel = , XF86MonBrightnessDown, exec, brightnessctl s 5%-
-  '';
+    # Vim-подобная навигация
+    bind = SUPER, H, movefocus, l
+    bind = SUPER, L, movefocus, r
+    bind = SUPER, K, movefocus, u
+    bind = SUPER, J, movefocus, d
+    
+    # Перемещение окон (vim-style)
+    bind = SUPER SHIFT, H, movewindow, l
+    bind = SUPER SHIFT, L, movewindow, r
+    bind = SUPER SHIFT, K, movewindow, u
+    bind = SUPER SHIFT, J, movewindow, d
+    
+    # Изменение размера окон
+    bind = SUPER ALT, H, resizeactive, -20 0
+    bind = SUPER ALT, L, resizeactive, 20 0
+    bind = SUPER ALT, K, resizeactive, 0 -20
+    bind = SUPER ALT, J, resizeactive, 0 20
+    
+    # Дополнительные удобные бинды
+    bind = SUPER, V, togglefloating
+    bind = SUPER, P, pseudo # dwindle
+    bind = SUPER, E, togglesplit # dwindle
+    
+    # Двигаем окна мышкой с SUPER
+    bindm = SUPER, mouse:272, movewindow
+    bindm = SUPER, mouse:273, resizewindow
+    '';
 
   home.file.".config/kanshi/config".text = ''
     profile {
@@ -65,82 +91,145 @@
     }
   '';
 
-  home.file.".config/waybar/config".text = ''
-    {
-        "layer": "top",
-        "position": "top",
-        "height": 30,
-        "modules-left": ["hyprland/workspaces"],
-        "modules-center": ["clock"],
-        "modules-right": ["battery", "pulseaudio", "network", "tray"],
-        
-        "clock": {
-            "format": "{:%H:%M}"
-        },
-        
-        "battery": {
-            "format": "{capacity}% {icon}",
-            "format-icons": ["", "", "", "", ""],
-            "states": {
-                "warning": 30,
-                "critical": 15
-            }
-        },
-        
-        "network": {
-            "format-wifi": "{essid} ",
-            "format-ethernet": "",
-            "format-disconnected": "⚠"
-        },
-        
-        "pulseaudio": {
-            "format": "{volume}% {icon}",
-            "format-muted": "",
-            "format-icons": {
-                "default": ["", "", ""]
-            }
-        },
-        
-        "tray": {
-            "icon-size": 16,
-            "spacing": 10
-        }
+home.file.".config/waybar/config".text = ''
+  {
+    "layer": "top",
+    "position": "top",
+    "mod": "dock",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "height": 30,
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": ["battery", "backlight", "pulseaudio", "network", "tray"],
+    
+    "hyprland/workspaces": {
+      "disable-scroll": true,
+      "all-outputs": true,
+      "format": "{name}"
+    },
+    
+    "clock": {
+      "format": "{:%H:%M}",
+      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    
+    "battery": {
+      "interval": 60,
+      "states": {
+        "warning": 30,
+        "critical": 15
+      },
+      "format": "{capacity}% {icon}",
+      "format-icons": ["", "", "", "", ""],
+      "max-length": 25
+    },
+    
+    "network": {
+      "format-wifi": "{essid} ({signalStrength}%) ",
+      "format-ethernet": "{ipaddr}/{cidr} ",
+      "tooltip-format": "{ifname} via {gwaddr} ",
+      "format-linked": "{ifname} (No IP) ",
+      "format-disconnected": "Disconnected ⚠",
+      "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },
+    
+    "pulseaudio": {
+      "format": "{volume}% {icon}",
+      "format-bluetooth": "{volume}% {icon} ",
+      "format-muted": "",
+      "format-icons": {
+        "headphone": "",
+        "hands-free": "",
+        "headset": "",
+        "phone": "",
+        "portable": "",
+        "car": "",
+        "default": ["", ""]
+      },
+      "scroll-step": 1,
+      "on-click": "pavucontrol",
+      "ignored-sinks": ["Easy Effects Sink"]
     }
-  '';
+  }
+'';
 
-  home.file.".config/waybar/style.css".text = ''
-    * {
-        font-family: "JetBrainsMono Nerd Font";
-        font-size: 13px;
-    }
+home.file.".config/waybar/style.css".text = ''
+  * {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 13px;
+    min-height: 0;
+  }
 
-    window#waybar {
-        background: rgba(30, 30, 46, 0.9);
-        color: #ffffff;
-    }
+  window#waybar {
+    background: rgba(30, 30, 46, 0.9);
+    color: #cdd6f4;
+  }
 
-    #workspaces button {
-        padding: 0 5px;
-        color: #ffffff;
-    }
+  tooltip {
+    background: #1e1e2e;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #11111b;
+  }
 
-    #workspaces button.active {
-        background: #33ccff;
-        color: #000000;
-    }
+  #workspaces button {
+    padding: 5px;
+    color: #313244;
+    margin-right: 5px;
+  }
 
-    #clock,
-    #battery,
-    #network,
-    #pulseaudio,
-    #tray {
-        padding: 0 10px;
-    }
-  '';
+  #workspaces button.active {
+    color: #a6adc8;
+  }
+
+  #workspaces button.focused {
+    color: #a6adc8;
+    background: #eba0ac;
+    border-radius: 10px;
+  }
+
+  #workspaces button.urgent {
+    color: #11111b;
+    background: #a6e3a1;
+    border-radius: 10px;
+  }
+
+  #workspaces button:hover {
+    background: #11111b;
+    color: #cdd6f4;
+    border-radius: 10px;
+  }
+
+  #clock,
+  #battery,
+  #pulseaudio,
+  #network,
+  #workspaces,
+  #tray,
+  #backlight {
+    background: #1e1e2e;
+    padding: 0px 10px;
+    margin: 3px 0px;
+    margin-top: 10px;
+    border: 1px solid #181825;
+  }
+'';
 
   home.file.".config/foot/foot.ini".text = ''
-    font=JetBrainsMono Nerd Font:size=11
-    pad=10x10
+  # Можете переключаться между этими шрифтами, чтобы выбрать любимый
+  #font=JetBrainsMono Nerd Font:size=11
+  #font=FiraCode Nerd Font:size=11
+  #font=Iosevka Nerd Font:size=11
+  font=VictorMono Nerd Font:size=11
+  #font=Hack Nerd Font:size=11
+
+  pad=10x10
+
+  [colors]
+  alpha=0.95
   '';
 
   home.file.".config/mako/config".text = ''

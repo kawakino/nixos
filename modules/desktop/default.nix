@@ -35,6 +35,16 @@
   # Шрифты (исправленный способ)
   fonts.packages = with pkgs; [
     jetbrains-mono
+    (nerdfonts.override { fonts = [ 
+      "JetBrainsMono"
+      "FiraCode" 
+      "Iosevka"
+      "VictorMono"
+      "Hack"
+    ]; })
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
   ];
 
   # Переменные окружения
