@@ -20,17 +20,36 @@
   services.udisks2.enable = true;
 
   # Минимальный набор пакетов
-  environment.systemPackages = with pkgs; [
-    foot            # Терминал
-    rofi-wayland    # Лаунчер
-    waybar          # Статус бар
-    mako            # Уведомления
-    wl-clipboard    # Буфер обмена
-    swaylock-effects  # Блокировка экрана
-    brightnessctl   # Управление яркостью
-    kanshi          # Автоматическое управление мониторами
-    wdisplays       # GUI для настройки мониторов
-  ];
+environment.systemPackages = with pkgs; [
+    foot            
+    rofi-wayland    
+    waybar          
+    mako            
+    wl-clipboard    
+    swaylock-effects  
+    brightnessctl   
+    kanshi          
+    wdisplays       
+    gtk3            # добавляем
+    libgcc          # добавляем
+];
+
+# Добавляем поддержку GTK
+programs.waybar = {
+  enable = true;
+  package = pkgs.waybar;
+};
+
+# Добавляем переменные окружения для Wayland
+environment.sessionVariables = {
+  NIXOS_OZONE_WL = "1";
+  WLR_NO_HARDWARE_CURSORS = "1";
+  XCURSOR_SIZE = "24";
+  # Добавляем эти переменные
+  XDG_CURRENT_DESKTOP = "Hyprland";
+  XDG_SESSION_TYPE = "wayland";
+  XDG_SESSION_DESKTOP = "Hyprland";
+};
 
   fonts.packages = with pkgs; [
     jetbrains-mono
