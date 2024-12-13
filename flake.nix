@@ -23,6 +23,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";  # добавляем это
             home-manager.users.cizen = import ./home/home.nix;
           }
         ];
