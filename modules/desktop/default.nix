@@ -36,13 +36,6 @@
     vanilla-dmz     
   ];
 
-  home.pointerCursor = {
-    package = pkgs.vanilla-dmz;
-    name = "Vanilla-DMZ";
-    size = 24;
-  };
-}
-
   # Переменные окружения для Wayland
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
@@ -51,6 +44,12 @@
     XDG_CURRENT_DESKTOP = "Hyprland";
     XDG_SESSION_TYPE = "wayland";
     XDG_SESSION_DESKTOP = "Hyprland";
+  };
+
+  home.pointerCursor = {
+    package = pkgs.vanilla-dmz;
+    name = "Vanilla-DMZ";
+    size = 24;
   };
 
   # Шрифты
