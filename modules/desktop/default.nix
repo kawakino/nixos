@@ -20,7 +20,7 @@
   services.udisks2.enable = true;
 
   # Минимальный набор пакетов
-environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     foot            
     rofi-wayland    
     waybar          
@@ -30,31 +30,30 @@ environment.systemPackages = with pkgs; [
     brightnessctl   
     kanshi          
     wdisplays       
-    gtk3            # добавляем
-    libgcc          # добавляем
-];
+    gtk3            
+    libgcc          
+  ];
 
-# Добавляем поддержку GTK
+  # Добавляем поддержку GTK
   programs.waybar = {
     enable = true;
     systemd = {
-      enable = false;  # Отключаем systemd интеграцию, так как будем запускать через Hyprland
+      enable = false;  
       target = "graphical-session.target";  
     };
   };
-}
 
-# Добавляем переменные окружения для Wayland
-environment.sessionVariables = {
-  NIXOS_OZONE_WL = "1";
-  WLR_NO_HARDWARE_CURSORS = "1";
-  XCURSOR_SIZE = "24";
-  # Добавляем эти переменные
-  XDG_CURRENT_DESKTOP = "Hyprland";
-  XDG_SESSION_TYPE = "wayland";
-  XDG_SESSION_DESKTOP = "Hyprland";
-};
+  # Переменные окружения для Wayland
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    WLR_NO_HARDWARE_CURSORS = "1";
+    XCURSOR_SIZE = "24";
+    XDG_CURRENT_DESKTOP = "Hyprland";
+    XDG_SESSION_TYPE = "wayland";
+    XDG_SESSION_DESKTOP = "Hyprland";
+  };
 
+  # Шрифты
   fonts.packages = with pkgs; [
     jetbrains-mono
     nerd-fonts.jetbrains-mono
