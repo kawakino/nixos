@@ -102,40 +102,77 @@ home.file.".config/waybar/config".text = ''
 {
     "layer": "top",
     "position": "top",
-    "height": 30,
+    "spacing": 4,
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["network", "cpu", "memory", "tray"],
-    
+    "modules-right": ["tray"],
+
     "hyprland/workspaces": {
-        "format": "{name}"
+        "format": "{name}",
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1"
     },
-    
+
     "clock": {
-        "format": "{:%H:%M}"
+        "format": "{:%H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "tray": {
+        "spacing": 10
     }
 }
 '';
 
 home.file.".config/waybar/style.css".text = ''
 * {
-    font-family: JetBrainsMono Nerd Font;
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font";
     font-size: 13px;
+    min-height: 0;
 }
 
 window#waybar {
-    background: #1e1e2e;
-    color: #cdd6f4;
+    background: transparent;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+#workspaces {
+    margin-right: 8px;
+    border-radius: 10px;
+    background-color: #1e1e2e;
+    margin: 5px;
+    padding: 0px 5px;
 }
 
 #workspaces button {
-    padding: 0 5px;
+    padding: 0px 5px;
     color: #cdd6f4;
 }
 
 #workspaces button.active {
-    background: #a6adc8;
     color: #1e1e2e;
+    background-color: #cdd6f4;
+    border-radius: 10px;
+}
+
+#clock {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 0px 10px;
+}
+
+#tray {
+    background-color: #1e1e2e;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 0px 10px;
 }
 '';
 
