@@ -23,7 +23,7 @@
   environment.systemPackages = with pkgs; [
     foot            
     rofi-wayland    
-    waybar          # waybar просто как пакет
+    waybar          
     mako            
     wl-clipboard    
     swaylock-effects  
@@ -32,7 +32,7 @@
     wdisplays       
     gtk3            
     libgcc   
-    firefox  
+    firefox
     vanilla-dmz     
   ];
 
@@ -44,12 +44,6 @@
     XDG_CURRENT_DESKTOP = "Hyprland";
     XDG_SESSION_TYPE = "wayland";
     XDG_SESSION_DESKTOP = "Hyprland";
-  };
-
-  home.pointerCursor = {
-    package = pkgs.vanilla-dmz;
-    name = "Vanilla-DMZ";
-    size = 24;
   };
 
   # Шрифты
