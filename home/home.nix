@@ -8,7 +8,8 @@
     ./waybar.nix
   ];
 
+  fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
-    nerdfonts  # полный пакет nerdfonts
+    nerd-fonts.jetbrains-mono
   ];
 }
