@@ -23,7 +23,7 @@
   environment.systemPackages = with pkgs; [
     foot            
     rofi-wayland    
-    waybar          
+    waybar          # waybar просто как пакет
     mako            
     wl-clipboard    
     swaylock-effects  
@@ -33,15 +33,6 @@
     gtk3            
     libgcc          
   ];
-
-  # Добавляем поддержку GTK
-  programs.waybar = {
-    enable = true;
-    systemd = {
-      enable = false;  
-      target = "graphical-session.target";  
-    };
-  };
 
   # Переменные окружения для Wayland
   environment.sessionVariables = {
