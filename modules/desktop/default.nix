@@ -35,10 +35,14 @@ environment.systemPackages = with pkgs; [
 ];
 
 # Добавляем поддержку GTK
-programs.waybar = {
-  enable = true;
-  package = pkgs.waybar;
-};
+  programs.waybar = {
+    enable = true;
+    systemd = {
+      enable = false;  # Отключаем systemd интеграцию, так как будем запускать через Hyprland
+      target = "graphical-session.target";  
+    };
+  };
+}
 
 # Добавляем переменные окружения для Wayland
 environment.sessionVariables = {

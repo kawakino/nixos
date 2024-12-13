@@ -105,110 +105,38 @@ home.file.".config/waybar/config".text = ''
     "height": 30,
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "network", "cpu", "memory", "tray"],
+    "modules-right": ["network", "cpu", "memory", "tray"],
     
     "hyprland/workspaces": {
-        "format": "{name}",
-        "on-click": "activate"
+        "format": "{name}"
     },
     
     "clock": {
         "format": "{:%H:%M}"
-    },
-    
-    "cpu": {
-        "format": "{usage}% ",
-        "tooltip": false
-    },
-    
-    "memory": {
-        "format": "{}% "
-    },
-    
-    "network": {
-        "format-wifi": "{essid} ",
-        "format-ethernet": "{ipaddr} ",
-        "format-disconnected": "Disconnected ⚠",
-        "tooltip-format": "{ifname}"
-    },
-    
-    "pulseaudio": {
-        "format": "{volume}% {icon}",
-        "format-muted": " Muted",
-        "format-icons": {
-            "default": ["", "", ""]
-        },
-        "on-click": "pavucontrol"
-    },
-    
-    "tray": {
-        "icon-size": 16,
-        "spacing": 10
     }
 }
 '';
 
 home.file.".config/waybar/style.css".text = ''
-  * {
-    font-family: "JetBrainsMono Nerd Font";
+* {
+    font-family: JetBrainsMono Nerd Font;
     font-size: 13px;
-    min-height: 0;
-  }
+}
 
-  window#waybar {
-    background: rgba(30, 30, 46, 0.9);
-    color: #cdd6f4;
-  }
-
-  tooltip {
+window#waybar {
     background: #1e1e2e;
-    border-radius: 10px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: #11111b;
-  }
-
-  #workspaces button {
-    padding: 5px;
-    color: #313244;
-    margin-right: 5px;
-  }
-
-  #workspaces button.active {
-    color: #a6adc8;
-  }
-
-  #workspaces button.focused {
-    color: #a6adc8;
-    background: #eba0ac;
-    border-radius: 10px;
-  }
-
-  #workspaces button.urgent {
-    color: #11111b;
-    background: #a6e3a1;
-    border-radius: 10px;
-  }
-
-  #workspaces button:hover {
-    background: #11111b;
     color: #cdd6f4;
-    border-radius: 10px;
-  }
+}
 
-  #clock,
-  #battery,
-  #pulseaudio,
-  #network,
-  #workspaces,
-  #tray,
-  #backlight {
-    background: #1e1e2e;
-    padding: 0px 10px;
-    margin: 3px 0px;
-    margin-top: 10px;
-    border: 1px solid #181825;
-  }
+#workspaces button {
+    padding: 0 5px;
+    color: #cdd6f4;
+}
+
+#workspaces button.active {
+    background: #a6adc8;
+    color: #1e1e2e;
+}
 '';
 
   home.file.".config/foot/foot.ini".text = ''
