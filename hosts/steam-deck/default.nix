@@ -11,7 +11,6 @@
     # AMD graphics for Steam Deck
     opengl = {
       enable = true;
-      driSupport = true;
       driSupport32Bit = true;  # Needed for Steam
     };
   };
