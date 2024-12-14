@@ -1,10 +1,7 @@
-{ config, pkgs, ... }:
-
 {
   imports = [
-    ./wayland
     ./programs
-    ./cursor.nix    # добавляем новый файл
+    ./wayland
   ];
 
   home.stateVersion = "24.11";
