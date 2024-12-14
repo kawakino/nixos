@@ -165,7 +165,7 @@
     }
   '';
 
-  // CSS STYLING
+  # CSS STYLING
   home.file.".config/waybar/style.css".text = ''
     /* Base color definitions */
     @define-color bg_main rgba(25, 25, 25, 0.65);
