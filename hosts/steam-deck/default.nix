@@ -11,7 +11,7 @@
     # AMD graphics for Steam Deck
     opengl = {
       enable = true;
-      driSupport = true;
+      # Удалили driSupport так как он больше не нужен
       driSupport32Bit = true;
       extraPackages = with pkgs; [
         amdvlk
