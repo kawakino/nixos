@@ -9,14 +9,10 @@
     steam-hardware.enable = true;
     
     # AMD graphics for Steam Deck
-    graphics = {
+    opengl = {
       enable = true;
-      enable32Bit = true;  # Для Steam
-      extraPackages = with pkgs; [
-        amdvlk
-        rocmPackages.clr    # Правильное имя пакета
-        rocmPackages.rocm-runtime
-      ];
+      driSupport = true;
+      driSupport32Bit = true;  # Needed for Steam
     };
   };
 
