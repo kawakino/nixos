@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
   fonts.packages = with pkgs; [
     jetbrains-mono
-    (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" "Hack" ]; })
+    nerd-fonts.jetbrainsmono
     noto-fonts
     noto-fonts-emoji
   ];
