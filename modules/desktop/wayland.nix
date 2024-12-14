@@ -1,4 +1,4 @@
-{
+{ config, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     foot
     rofi-wayland
