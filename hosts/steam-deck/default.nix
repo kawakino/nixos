@@ -11,8 +11,11 @@
       remotePlay.openFirewall = true;  # Для Remote Play
       autoStart = false;  # Отключаем автозапуск
     };
-    devices.steamdeck.enable = true;  # Поддержка железа Steam Deck
-    kde.enable = false;  # Отключаем KDE
+    devices.steamdeck = {
+      enable = true;  # Поддержка железа Steam Deck
+      # Отключаем настройки рабочего стола, так как используем Hyprland
+      noDisplay = true;
+    };
   };
 
   # Необходимые пакеты для игр
