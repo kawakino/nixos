@@ -9,14 +9,13 @@
     steam-hardware.enable = true;
     
     # AMD graphics for Steam Deck
-    opengl = {
+    graphics = {
       enable = true;
-      # Удалили driSupport так как он больше не нужен
-      driSupport32Bit = true;
+      enable32Bit = true;  # Для Steam
       extraPackages = with pkgs; [
         amdvlk
-        rocm-opencl-icd
-        rocm-opencl-runtime
+        rocmPackages.clr    # Правильное имя пакета
+        rocmPackages.rocm-runtime
       ];
     };
   };
