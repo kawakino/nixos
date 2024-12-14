@@ -1,5 +1,5 @@
 {
-  description = "Minimal NixOS Configuration";
+  description = "Минималистичная NixOS конфигурация";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -9,18 +9,23 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }: {
-    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+  outputs = { self, nixpkgs, home-manager, ... }:
+    let
       system = "x86_64-linux";
-      modules = [
-        ./configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.cizen = import ./home;
-        }
-      ];
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+    {
+      nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {  # Изменено с default на nixos
+        inherit system;
+        modules = [
+          ./configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.cizen = import ./home;
+          }
+        ];
+      };
     };
-  };
 }
