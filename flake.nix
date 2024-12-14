@@ -1,5 +1,5 @@
 {
-  description = "Минималистичная NixOS конфигурация";
+  description = "NixOS Configuration with multiple device profiles";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -13,19 +13,33 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-    in
-    {
-      nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {  # Изменено с default на nixos
-        inherit system;
-        modules = [
-          ./configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.cizen = import ./home;
-          }
-        ];
+    in {
+      nixosConfigurations = {
+        # Steam Deck configuration
+        "steam-deck" = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./hosts/steam-deck
+            home-manager.nixosModules.home-manager {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.cizen = import ./home;
+            }
+          ];
+        };
+        
+        # Laptop configuration
+        "laptop" = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./hosts/laptop
+            home-manager.nixosModules.home-manager {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.cizen = import ./home;
+            }
+          ];
+        };
       };
     };
 }
