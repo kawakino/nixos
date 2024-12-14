@@ -4,18 +4,10 @@
     ./hardware.nix
   ];
 
-  # Минимальные настройки Jovian только для железа Steam Deck
+  # Базовые настройки Jovian
   jovian = {
-    steam = {
-      enable = true;
-      remotePlay.openFirewall = true;  # Для Remote Play
-      autoStart = false;  # Отключаем автозапуск
-    };
-    devices.steamdeck = {
-      enable = true;  # Поддержка железа Steam Deck
-      # Отключаем настройки рабочего стола, так как используем Hyprland
-      noDisplay = true;
-    };
+    steam.enable = true;
+    devices.steamdeck.enable = true;
   };
 
   # Необходимые пакеты для игр
